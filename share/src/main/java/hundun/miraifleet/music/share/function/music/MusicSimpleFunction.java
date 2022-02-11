@@ -74,10 +74,11 @@ public class MusicSimpleFunction extends BaseFunction<Void> {
         }
             
         @Handler
-        public void fromCommand(CommandSender sender, String keyword) {
+        public void fromCommand(CommandSender sender, String firstKeyword, String... keywords) {
             if (!checkCosPermission(sender)) {
                 return;
             }
+            String keyword = bridgeHelper.merge(firstKeyword, keywords);
             bridgeHelper.musicSearch(
                     new FunctionReplyReceiver(sender, plugin.getLogger()), 
                     keyword, 

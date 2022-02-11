@@ -39,6 +39,9 @@ public class MusicBridgeHelper {
         miraiSongLogic.onEnable(false);
     }
 
+    public String merge(String firstKeyword, String... keywords) {
+        return firstKeyword + (keywords != null ? (" " + String.join(" ", keywords)) : "");
+    }
 
     public void musicSearch(FunctionReplyReceiver receiver, String keyword, CardStyle cardStyle, MusicSourceId targetSourceId) {
         MusicCardProvider cardProvider = miraiSongLogic.cardStyleToProviderMap.get(cardStyle);

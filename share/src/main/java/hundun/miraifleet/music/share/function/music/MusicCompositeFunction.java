@@ -61,10 +61,11 @@ public class MusicCompositeFunction extends BaseFunction<Void> {
         }
             
         @SubCommand(value = "QQ音乐")
-        public void fromCommand(CommandSender sender, String keyword) {
+        public void fromCommand(CommandSender sender, String firstKeyword, String... keywords) {
             if (!checkCosPermission(sender)) {
                 return;
             }
+            String keyword = bridgeHelper.merge(firstKeyword, keywords);
             bridgeHelper.musicSearch(
                     new FunctionReplyReceiver(sender, plugin.getLogger()),
                     keyword,
@@ -74,10 +75,11 @@ public class MusicCompositeFunction extends BaseFunction<Void> {
         }
         
         @SubCommand(value = {"网易", "网易云"})
-        public void searchNetEase(CommandSender sender, String keyword) {
+        public void searchNetEase(CommandSender sender, String firstKeyword, String... keywords) {
             if (!checkCosPermission(sender)) {
                 return;
             }
+            String keyword = bridgeHelper.merge(firstKeyword, keywords);
             bridgeHelper.musicSearch(
                     new FunctionReplyReceiver(sender, plugin.getLogger()),
                     keyword,

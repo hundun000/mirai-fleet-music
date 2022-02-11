@@ -31,7 +31,7 @@ subprojects {
     apply plugin: 'net.mamoe.mirai-console'
     apply plugin: 'java'
     apply plugin: 'eclipse'
-    //apply plugin: 'java-library'
+    
 
     version = '0.0.1-SNAPSHOT'
 	ext {
@@ -71,6 +71,7 @@ project(":plugin") {
 project(":share") {
     apply plugin: "maven"
     apply plugin: "maven-publish"
+    apply plugin: 'java-library'
     
     sourceSets.main.java.srcDirs = [ "src/main/java" ]
     eclipse.project.name = appName + "-share"
@@ -94,7 +95,7 @@ project(":share") {
 
     dependencies {
 
-        implementation 'com.github.hundun000:mirai-fleet-framework:70029191ce'
+        api 'com.github.hundun000:mirai-fleet-framework:70029191ce'
         
         // for musicPlugin
         implementation 'com.google.code.gson:gson:2.8.6'
