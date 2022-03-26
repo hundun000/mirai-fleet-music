@@ -33,7 +33,7 @@ subprojects {
     apply plugin: 'eclipse'
     
 
-    version = '0.0.1-SNAPSHOT'
+    version = '0.3.1-SNAPSHOT'
 	ext {
         appName = "mirai-fleet-music"
 	}
@@ -95,7 +95,7 @@ project(":share") {
 
     dependencies {
 
-        api 'com.github.hundun000:mirai-fleet-framework:0.1'
+        api 'com.github.hundun000:mirai-fleet-framework:0.3'
         
         // for musicPlugin
         implementation 'com.google.code.gson:gson:2.8.6'

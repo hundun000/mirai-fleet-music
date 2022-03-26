@@ -17,10 +17,12 @@ public class MusicBotLogic extends BaseBotLogic {
     public MusicBotLogic(JvmPlugin plugin) {
         super(plugin, "音乐");
         
-        musicSimpleFunction = new MusicSimpleFunction(this, plugin, characterName, false);
+        musicSimpleFunction = new MusicSimpleFunction(this, plugin, characterName);
+        musicSimpleFunction.setSkipRegisterCommand(false);
         functions.add(musicSimpleFunction);
         
-        musicCompositeFunction = new MusicCompositeFunction(this, plugin, characterName, false);
+        musicCompositeFunction = new MusicCompositeFunction(this, plugin, characterName);
+        musicCompositeFunction.setSkipRegisterCommand(false);
         functions.add(musicCompositeFunction);
     }
     

@@ -34,15 +34,13 @@ public class MusicCompositeFunction extends BaseFunction<Void> {
     public MusicCompositeFunction(
             BaseBotLogic botLogic,
             JvmPlugin plugin, 
-            String characterName,
-            boolean skipRegisterCommand
+            String characterName
             ) {
         super(
                 botLogic,
                 plugin, 
                 characterName, 
-                "MusicCompositeFunction", 
-                skipRegisterCommand,
+                "MusicCompositeFunction",
                 null
                 );
         this.bridgeHelper = MusicBridgeHelper.getInstance(plugin);
