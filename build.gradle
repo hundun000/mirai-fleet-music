@@ -69,8 +69,7 @@ project(":plugin") {
 
     dependencies {
         implementation project(":share")
-        
-        implementation 'com.github.hundun000.mirai-fleet-framework:mirai-fleet-framework-core:0.5.0'
+
         testImplementation "junit:junit:4.11"
     }
 }
@@ -97,12 +96,16 @@ project(":share") {
     
     dependencies {
 
-        implementation 'com.github.hundun000.mirai-fleet-framework:mirai-fleet-framework-core:0.5.0'
+        api 'com.github.hundun000.mirai-fleet-framework:framework-core:0.5.2b'
         //implementation 'com.github.hundun000.mirai-fleet-framework:mirai-fleet-framework-starter:0.5.0'
         
         // for musicPlugin
         implementation 'com.google.code.gson:gson:2.8.6'
-        
+
+        // for sing
+        implementation 'com.github.nwaldispuehl:java-lame:v3.98.4'
+        implementation 'com.github.whiterasbk:mider:kbeta0.9.1'
+
         compileOnly 'org.projectlombok:lombok:1.18.4'
         annotationProcessor 'org.projectlombok:lombok:1.18.4'
         
