@@ -35,7 +35,7 @@ public class MusicSearchSimpleFunction extends BaseFunction<Void> {
                 null
                 );
         this.bridgeHelper = MusicBridgeHelper.getInstance(plugin);
-        this.commandComponent = new CompositeCommandFunctionComponent(plugin, characterName, functionName);
+        this.commandComponent = new CompositeCommandFunctionComponent();
     }
     
 //    @EventHandler
@@ -58,8 +58,8 @@ public class MusicSearchSimpleFunction extends BaseFunction<Void> {
 
     public class CompositeCommandFunctionComponent extends AbstractSimpleCommandFunctionComponent {
 
-        public CompositeCommandFunctionComponent(JvmPlugin plugin, String characterName, String functionName) {
-            super(plugin, characterName, functionName, "音乐");
+        public CompositeCommandFunctionComponent() {
+            super(plugin, botLogic.getUserCommandRootPermission(), characterName, functionName, "音乐");
         }
             
         @Handler

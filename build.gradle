@@ -31,13 +31,12 @@ subprojects {
     apply plugin: 'net.mamoe.mirai-console'
     apply plugin: 'eclipse'
     apply plugin: 'java'
-    apply plugin: 'java-library'
     
-
     java {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
+    mirai { jvmTarget = JavaVersion.VERSION_11}
     
     configurations {
         compileOnly {
@@ -58,6 +57,13 @@ subprojects {
     artifacts {
         archives sourcesJar
     }
+    
+    dependencies {
+        compileOnly 'org.projectlombok:lombok:1.18.4'
+        annotationProcessor 'org.projectlombok:lombok:1.18.4'
+
+        testImplementation "junit:junit:4.11"
+    }
 }
 
 
@@ -69,10 +75,7 @@ project(":plugin") {
 
     dependencies {
         implementation project(":share")
-        
-        
-        
-        testImplementation "junit:junit:4.11"
+
     }
 }
 
@@ -98,23 +101,17 @@ project(":share") {
     
     dependencies {
 
-        api 'com.github.hundun000.mirai-fleet-framework:framework-core:0.5.3'
+        api 'com.github.hundun000.mirai-fleet-framework:framework-core:0.6.0b'
         //implementation 'com.github.hundun000.mirai-fleet-framework:mirai-fleet-framework-starter:0.5.0'
         
         // for musicPlugin
         implementation 'com.google.code.gson:gson:2.8.6'
-
-        // for sing
         implementation 'com.github.nwaldispuehl:java-lame:v3.98.4'
-        implementation 'com.github.whiterasbk:mider:cad4704930'
-        
-        // for AudioUtils
-        //implementation fileTree('libs') { include '*.jar' }
 
-        compileOnly 'org.projectlombok:lombok:1.18.4'
-        annotationProcessor 'org.projectlombok:lombok:1.18.4'
+        // for midi
+        api 'com.github.whiterasbk:mider:4e2b1f63c0'
         
-        testImplementation "junit:junit:4.11"
+
     }
 }
 

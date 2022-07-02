@@ -3,8 +3,8 @@ package hundun.miraifleet.music.share.function.music;
 import hundun.miraifleet.framework.core.botlogic.BaseBotLogic;
 import hundun.miraifleet.framework.core.function.BaseFunction;
 import hundun.miraifleet.framework.core.function.FunctionReplyReceiver;
-import hundun.miraifleet.framework.core.helper.Utils;
-import hundun.miraifleet.framework.core.helper.file.CacheableFileHelper;
+import hundun.miraifleet.framework.helper.Utils;
+import hundun.miraifleet.framework.helper.file.CacheableFileHelper;
 import hundun.miraifleet.music.share.function.music.search.MusicBridgeHelper;
 import hundun.miraifleet.music.share.function.music.search.khjxiaogu.MiraiSongLogic.CardStyle;
 import hundun.miraifleet.music.share.function.music.search.khjxiaogu.MiraiSongLogic.MusicSourceId;
@@ -18,6 +18,7 @@ import net.mamoe.mirai.utils.ExternalResource;
 import whiter.music.mider.MidiFile;
 import whiter.music.mider.code.MiderCodeParserConfiguration;
 import whiter.music.mider.code.MidiProduceCoreKt;
+import whiter.music.mider.code.ProduceCoreResult;
 import whiter.music.mider.dsl.FuncKt;
 import whiter.music.mider.dsl.MiderDSL;
 
@@ -51,7 +52,7 @@ public class MusicMidiFunction extends BaseFunction<Void> {
                 "MusicMidiFunction",
                 null
                 );
-        this.commandComponent = new CompositeCommandFunctionComponent(plugin, characterName, functionName);
+        this.commandComponent = new CompositeCommandFunctionComponent();
         this.midiCacheableFileHelper = new CacheableFileHelper(resolveFunctionCacheFileFolder(), "midi", plugin.getLogger());
     }
 
@@ -80,8 +81,8 @@ public class MusicMidiFunction extends BaseFunction<Void> {
 
     public class CompositeCommandFunctionComponent extends AbstractSimpleCommandFunctionComponent {
 
-        public CompositeCommandFunctionComponent(JvmPlugin plugin, String characterName, String functionName) {
-            super(plugin, characterName, functionName, "midi");
+        public CompositeCommandFunctionComponent() {
+            super(plugin, botLogic.getUserCommandRootPermission(), characterName, functionName, "midi");
         }
 
         @Handler
@@ -101,7 +102,7 @@ public class MusicMidiFunction extends BaseFunction<Void> {
             } else {
                 ExternalResource externalResource = ExternalResource.create(midiFile).toAutoCloseable();
                 log.info("externalResource size = " + externalResource.getSize());
-                Message voiceOrNotSupportPlaceholder = receiver.uploadVoiceOrNotSupportPlaceholder(externalResource);
+                Message voiceOrNotSupportPlaceholder = receiver.uploadVoiceAndCloseOrNotSupportPlaceholder(externalResource);
                 if (voiceOrNotSupportPlaceholder instanceof Audio) {
                     log.info("has real Audio: " + Arrays.toString(((Audio) voiceOrNotSupportPlaceholder).getFileMd5()));
                 }
@@ -113,7 +114,8 @@ public class MusicMidiFunction extends BaseFunction<Void> {
     private InputStream calculateSilkOrRawMidiInputStream(String midiCode) {
         log.info("calculateMidiInputStream by " + midiCode);
         try {
-            MiderDSL dsl = MidiProduceCoreKt.miderCodeToMiderDSL(midiCode, miderCodeParserConfiguration);
+            ProduceCoreResult result = MidiProduceCoreKt.produceCore(midiCode, miderCodeParserConfiguration);
+            MiderDSL dsl = result.getMiderDSL();
             MidiFile midiFile = FuncKt.fromDslInstance(dsl);
             InputStream midiFileStream = midiFile.inStream();
             return midiFileStream;

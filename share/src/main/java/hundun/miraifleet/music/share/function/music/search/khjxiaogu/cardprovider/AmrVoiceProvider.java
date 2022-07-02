@@ -73,7 +73,7 @@ public class AmrVoiceProvider implements MusicCardProvider {
 				Utils.exeCmd(customCommand.replace("%input%", f.getAbsolutePath()).replace("%output%",
 						f2.getAbsolutePath()));
 				try (FileInputStream fis = new FileInputStream(f2);ExternalResource ex=ExternalResource.create(fis)) {
-				    return receiver.uploadVoiceOrNotSupportPlaceholder(ex);
+				    return receiver.uploadVoiceAndCloseOrNotSupportPlaceholder(ex);
 				}
 			} else if (wideBrand) {
 				if (autoSize)
@@ -86,7 +86,7 @@ public class AmrVoiceProvider implements MusicCardProvider {
 				do {
 					try {
 							try (FileInputStream fis = new FileInputStream(f2);ExternalResource ex=ExternalResource.create(fis)) {
-							    return receiver.uploadVoiceOrNotSupportPlaceholder(ex);
+							    return receiver.uploadVoiceAndCloseOrNotSupportPlaceholder(ex);
 							}
 					} catch (OverFileSizeMaxException ofse) {
 						Utils.exeCmd(ffmpeg, "-i", f.getAbsolutePath(), "-ab", brs[i], "-ar", "16000",
@@ -99,12 +99,11 @@ public class AmrVoiceProvider implements MusicCardProvider {
 						"1", "-fs", "1000000", "-y", f2.getAbsolutePath());
 				
 				try (FileInputStream fis = new FileInputStream(f2);ExternalResource ex=ExternalResource.create(fis)) {
-				    return receiver.uploadVoiceOrNotSupportPlaceholder(ex);
+				    return receiver.uploadVoiceAndCloseOrNotSupportPlaceholder(ex);
 				}
 			}
 
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} finally {
 			f.delete();
