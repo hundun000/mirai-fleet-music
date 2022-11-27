@@ -14,7 +14,7 @@ import net.mamoe.mirai.console.plugin.jvm.JvmPlugin;
  * @author hundun
  * Created on 2022/02/09
  */
-public class MusicSearchCompositeFunction extends BaseFunction<Void> {
+public class MusicSearchCompositeFunction extends BaseFunction {
     
     private final MusicBridgeHelper bridgeHelper;
     @Getter
@@ -29,8 +29,7 @@ public class MusicSearchCompositeFunction extends BaseFunction<Void> {
                 botLogic,
                 plugin, 
                 characterName, 
-                "MusicCompositeFunction",
-                null
+                "MusicCompositeFunction"
                 );
         this.bridgeHelper = MusicBridgeHelper.getInstance(plugin);
         this.commandComponent = new CompositeCommandFunctionComponent();
@@ -44,7 +43,7 @@ public class MusicSearchCompositeFunction extends BaseFunction<Void> {
     public class CompositeCommandFunctionComponent extends AbstractCompositeCommandFunctionComponent {
 
         public CompositeCommandFunctionComponent() {
-            super(plugin, botLogic.getUserCommandRootPermission(), characterName, functionName, "音乐v2");
+            super(plugin, botLogic, new UserLevelFunctionComponentConstructPack(characterName, functionName));
         }
             
         @SubCommand(value = "QQ音乐")

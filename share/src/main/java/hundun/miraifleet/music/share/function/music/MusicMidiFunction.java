@@ -33,8 +33,10 @@ import java.util.function.Function;
  * @author hundun
  * Created on 2022/02/09
  */
-public class MusicMidiFunction extends BaseFunction<Void> {
+public class MusicMidiFunction extends BaseFunction {
 
+    private static final String SHORT_FUNCTION_NAME = "midi";
+    
     private CacheableFileHelper midiCacheableFileHelper;
     private MiderCodeParserConfiguration miderCodeParserConfiguration = new MiderCodeParserConfiguration();
     @Getter
@@ -49,8 +51,7 @@ public class MusicMidiFunction extends BaseFunction<Void> {
                 botLogic,
                 plugin, 
                 characterName, 
-                "MusicMidiFunction",
-                null
+                "MusicMidiFunction"
                 );
         this.commandComponent = new CompositeCommandFunctionComponent();
         this.midiCacheableFileHelper = new CacheableFileHelper(resolveFunctionCacheFileFolder(), "midi", plugin.getLogger());
@@ -82,15 +83,15 @@ public class MusicMidiFunction extends BaseFunction<Void> {
     public class CompositeCommandFunctionComponent extends AbstractSimpleCommandFunctionComponent {
 
         public CompositeCommandFunctionComponent() {
-            super(plugin, botLogic.getUserCommandRootPermission(), characterName, functionName, "midi");
+            super(plugin, botLogic, new UserLevelFunctionComponentConstructPack(characterName, SHORT_FUNCTION_NAME));
         }
 
         @Handler
-        public void midi(CommandSender sender, String firstCode, String... subCodes) {
+        public void midi(CommandSender sender, @Name(value = "midiCode") String midiCode) {
             if (!checkCosPermission(sender)) {
                 return;
             }
-            String midiCode = MusicBridgeHelper.merge(firstCode, subCodes);
+            
             String fileName = midiCodeToFileName(midiCode);
             Function<String, InputStream> uncachedPatPatFileProvider = it -> calculateSilkOrRawMidiInputStream(midiCode);
             File midiFile = midiCacheableFileHelper.fromCacheOrProvider(fileName, uncachedPatPatFileProvider);
